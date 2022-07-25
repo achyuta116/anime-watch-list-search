@@ -1,20 +1,23 @@
-import type { NextPage } from 'next'
+import { NextPage } from 'next'
 import Head from 'next/head'
-import { useContext } from 'react'
-import { SfwContext } from '../contexts/sfwContext'
+import React from 'react'
+import SearchBox from '../components/SearchBox'
+import ModalContextProvider from '../contexts/modalContext'
 
-const Home: NextPage = () => {
-	const { sfw, toggleSfw } = useContext(SfwContext)
-	return (
-		<div className='bg-gray-900 h-screen'>
+const SearchPage : NextPage = () => {
+    return (
+        <div className='bg-gray-900'>
 			<Head>
 				<title>WatchListSearch</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main>
+			<main className='grid'>
+			<ModalContextProvider>
+				<SearchBox/>
+			</ModalContextProvider>
 			</main>
 		</div>
-	)
+    )
 }
 
-export default Home
+export default SearchPage

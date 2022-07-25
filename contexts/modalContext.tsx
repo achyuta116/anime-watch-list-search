@@ -2,18 +2,16 @@ import React, { createContext, useState } from 'react'
 
 type ModalContextType = {
     open: boolean,
-    openModal: () => void,
+    openModal: (id: Number) => void,
     closeModal: () => void,
     animeMalId: Number,
-    setAnimeMalId: (id: Number) => void
 }
 
 export const ModalContext = createContext<ModalContextType>({ 
-    open: false, 
-    openModal: () => console.log('open_modal unset'),
+    open: true, 
+    openModal: (id:Number) => console.log('open_modal unset'),
     closeModal: () => console.log('close_modal unset'),
-    animeMalId: 0,
-    setAnimeMalId: (id: Number) => console.log('set_anime_mal_id unset')
+    animeMalId: 0
   })
 
 interface Props {
@@ -22,11 +20,17 @@ interface Props {
 
 const ModalContextProvider = ({ children }: Props) => {
     const [open, setOpen] = useState<boolean>(false)
-    const openModal = () => setOpen(true)
-    const closeModal = () => setOpen(false)
+    const openModal = (id: Number) => {
+        setOpen(true)
+        setAnimeMalId(id)
+    }
+    const closeModal = () => {
+        setOpen(false)
+        setAnimeMalId(0)
+    }
     const [animeMalId, setAnimeMalId] = useState<Number>(0)
     return (
-        <ModalContext.Provider value={{open, openModal, closeModal, animeMalId, setAnimeMalId: (id: Number) => setAnimeMalId(id)}}>
+        <ModalContext.Provider value={{open, openModal, closeModal, animeMalId}}>
             { children }
         </ModalContext.Provider>
     )

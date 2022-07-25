@@ -27,6 +27,7 @@ export type Anime = {
     scored_by: Number,
     background: String,
     year: Number,
-    rating: String
+    rating: String,
+    url: String
 }
 

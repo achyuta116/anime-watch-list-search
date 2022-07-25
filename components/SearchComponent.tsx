@@ -1,3 +1,4 @@
+import { SearchIcon } from '@heroicons/react/outline'
 import React, { SetStateAction, useState } from 'react'
 import { Anime } from '../typings'
 import FilterSelectComponent from './FilterSelectComponent'
@@ -139,9 +140,7 @@ const SearchComponent = ({ callback }: Props) => {
     return (
         <div className='grid content-center mx-2 lg:mx-10' onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}>
             <div className='flex items-center my-3'>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mx-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                <SearchIcon className='h-5 w-5 mx-3 text-slate-500'/>
                 <input 
                 className='inline bg-transparent text-slate-300 outline-none border
                 border-slate-500 rounded-md px-4 py-2 font-light text-lg'
