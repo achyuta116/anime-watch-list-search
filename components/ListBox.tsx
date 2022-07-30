@@ -35,6 +35,7 @@ const ListBox = () => {
     }
     const handleListClick = (list: String) => {
         setList(list)
+        setAnime([])
         fetch('/api/list', {
             method: 'POST',
             body: JSON.stringify({
