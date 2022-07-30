@@ -14,6 +14,7 @@ const ListsComponent = ({ callback }: Props) => {
 			email: session?.user?.email ? session.user.email : ''
 		  })).then(res => res.json())
 		  .then(data => setLists(data.lists))
+		  .catch(err => console.log(err, 'ListsComponent /api/lists'))
 	}, [session])
 
 	return (

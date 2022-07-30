@@ -29,7 +29,9 @@ const ListBox = () => {
             console.log(data)
             window.location.reload()
         })
-        .catch(console.log)
+        .catch((err) => {
+            console.log(err, 'ListBox /api/anime')
+        })
     }
     const handleListClick = (list: String) => {
         setList(list)
@@ -54,6 +56,7 @@ const ListBox = () => {
                 })  
             }))
             .then(setAnime)
+            .catch(err => console.log(err, 'ListBox /api/list'))
         })
     }
     return (

@@ -13,6 +13,8 @@ const Modal = () => {
 			})).then(res => res.json())
 				.then(data => {
 					setLists(data.lists)
+				}).catch(err => {
+					console.log(err, 'Modal /api/lists')
 				})
 	}, [session])
 
@@ -30,7 +32,9 @@ const Modal = () => {
 		}).then(res => {
 			return res.json()
 		}).then(console.log)
-		.catch(console.log)
+		.catch((err) => {
+			console.log(err, 'Modal, /api/anime')
+		})
 		closeModal()
 	}
 	const handleCreate = () => {

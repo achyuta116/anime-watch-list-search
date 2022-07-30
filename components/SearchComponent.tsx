@@ -130,7 +130,9 @@ const SearchComponent = ({ callback }: Props) => {
         .then(data => {
             console.log(data)
             callback(data.data)
-        }).catch(console.log)
+        }).catch((err) => {
+            console.log(err, 'SearchComponent /v4/anime')
+        })
     }
 
     return (
