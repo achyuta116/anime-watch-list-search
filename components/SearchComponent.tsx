@@ -124,17 +124,13 @@ const SearchComponent = ({ callback }: Props) => {
             query += '&' + Array.from(selectedFilters).map(([key, value]) => `${key}=${value}`).join('&')
         console.log(query)
 
-        try {
-            fetch('https://api.jikan.moe/v4/anime?' + query, {
-                method: 'GET',
-            }).then(res => res.json())
-            .then(data => {
-                console.log(data)
-                callback(data.data)
-            }) 
-        } catch(err) {
-            console.log(err)
-        }
+        fetch('https://api.jikan.moe/v4/anime?' + query, {
+            method: 'GET',
+        }).then(res => res.json())
+        .then(data => {
+            console.log(data)
+            callback(data.data)
+        }).catch(console.log)
     }
 
     return (

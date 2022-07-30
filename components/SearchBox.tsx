@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ModalContext } from '../contexts/modalContext'
 import { SfwContext } from '../contexts/sfwContext'
 import { Anime } from '../typings'
@@ -11,6 +11,7 @@ const SearchBox = () => {
 	const [anime, setAnime] = useState<Anime[]>([])
 	const { sfw } = useContext(SfwContext)
 	const { openModal } = useContext(ModalContext)
+	useEffect(() => {}, [anime])
 	return (
 		<>
 			<Modal />
