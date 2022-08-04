@@ -1,6 +1,7 @@
 import { SearchIcon } from '@heroicons/react/outline'
 import React, { SetStateAction, useState } from 'react'
 import { Anime } from '../typings'
+import { fetchAndRetryIfNecessary } from '../utils/fetchAndRetryIfNecessary'
 import FilterSelectComponent from './FilterSelectComponent'
 import GenreSelectComponent from './GenreSelectComponent'
 
@@ -81,7 +82,7 @@ const SearchComponent = ({ callback }: Props) => {
             ['Recently Updated', 'start_date']
         ]],
         ['min_score', 'Score', [
-            ['All',''],
+            ['All', ''],
             ['(1) Appalling', '1'],
             ['(2) Horrible', '2'],
             ['(3) Very Bad', '3'],
@@ -107,52 +108,51 @@ const SearchComponent = ({ callback }: Props) => {
         setSelectedGenres(selectedGenres)
     }
     const setFilter = (filter: [String, String]) => {
-        if(filter[1] === '')
+        if (filter[1] === '')
             selectedFilters.delete(filter[0])
-        if(filter[0] === 'min_score' && filter[1] !== '') 
+        if (filter[0] === 'min_score' && filter[1] !== '')
             selectedFilters.set('max_score', (Number(filter[1]) + 1).toString())
-        else if(filter[0] === 'min_score')
+        else if (filter[0] === 'min_score')
             selectedFilters.delete('max_score')
         selectedFilters.set(filter[0], filter[1])
         setSelectedFilters(selectedFilters)
     }
     const handleSubmit = async () => {
         let query = encodeURIComponent('q') + '=' + encodeURIComponent(queryString)
-        if(selectedGenres.size > 0)
+        if (selectedGenres.size > 0)
             query += '&' + 'genres=' + (Array.from(selectedGenres).map(genre => genres.get(genre)).join(','))
-        if(selectedFilters.size > 0)
+        if (selectedFilters.size > 0)
             query += '&' + Array.from(selectedFilters).map(([key, value]) => `${key}=${value}`).join('&')
         console.log(query)
 
-        fetch('https://api.jikan.moe/v4/anime?' + query, {
-            method: 'GET',
-        }).then(res => res.json())
-        .then(data => {
-            console.log(data)
-            callback(data.data)
-        }).catch((err) => {
-            console.log(err, 'SearchComponent /v4/anime')
-        })
+        fetchAndRetryIfNecessary(() => fetch('https://api.jikan.moe/v4/anime?' + query))
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                callback(data.data)
+            }).catch((err) => {
+                console.log(err, 'SearchComponent /v4/anime')
+            })
     }
 
     return (
         <div className='grid content-center mx-2 lg:mx-10' onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}>
             <div className='flex items-center my-3'>
-                <SearchIcon className='h-5 w-5 mx-3 text-slate-500'/>
-                <input 
-                className='inline bg-transparent text-slate-300 outline-none border
+                <SearchIcon className='h-5 w-5 mx-3 text-slate-500' />
+                <input
+                    className='inline bg-transparent text-slate-300 outline-none border
                 border-slate-500 rounded-md px-4 py-2 font-light text-lg'
-                type="text" onChange={(e) => setQueryString(e.target.value)} placeholder="Search..."/>
+                    type="text" onChange={(e) => setQueryString(e.target.value)} placeholder="Search..." />
             </div>
             <h2 className='text-lg text-white mx-4 my-2'>Filter</h2>
-            <hr/>
+            <hr />
             <div className='my-3'>
-                {filter_tuples.map(tuple => 
-                    <FilterSelectComponent key={`${tuple[0]}`} tuple={tuple} setCallback={setFilter}/>    
+                {filter_tuples.map(tuple =>
+                    <FilterSelectComponent key={`${tuple[0]}`} tuple={tuple} setCallback={setFilter} />
                 )}
             </div>
             <h2 className='text-lg text-white mx-4 mb-2'>Genre</h2>
-            <hr/>
+            <hr />
             <div className='my-3'>
                 {genre_pairs.map(pair =>
                     <GenreSelectComponent key={`${pair[1]}`} pair={pair} setCallback={setGenre} unsetCallback={unsetGenre} />
