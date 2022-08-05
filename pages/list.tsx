@@ -5,7 +5,7 @@ import ListBox from '../components/ListBox'
 
 const List: NextPage = () => {
 	return (
-		<div className='bg-gray-900'>
+		<div className='bg-black'>
 			<Head>
 				<title>WatchListSearch</title>
 				<link rel="icon" href="/favicon.ico" />

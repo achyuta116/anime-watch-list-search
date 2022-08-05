@@ -20,7 +20,7 @@ const SearchBox = () => {
 				<CardContainer callback={openModal} character='+' anime={anime.filter(anime => {
 					return sfw ? true
 						: ['G', 'PG', 'PG-13', 'R', ''].includes(ratingToStub(anime.rating?.toString()))
-				})} />
+				})} loading={false} />
 			</div>
 		</>
 	)

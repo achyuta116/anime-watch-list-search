@@ -5,14 +5,15 @@ import Card from './Card'
 interface Props {
 	anime: Anime[],
 	callback: (id: Number) => void,
-	character: '+' | '-'
+	character: '+' | '-',
+	loading: boolean
 }
 
-const CardContainer = ({ anime, callback, character }: Props) => {
+const CardContainer = ({ anime, callback, character, loading = false }: Props) => {
 	useEffect(() => {}, [anime])
 	return (
 		<div className='h-[75vh] overflow-y-scroll'>
-			{anime.length != 0 && <div className='grid grid-cols-2 lg:grid-cols-3 
+			{!loading && anime.length != 0 && <div className='grid grid-cols-2 lg:grid-cols-3 
        place-items-center gap-2 md:mx-4 auto-rows-min'>
 				{anime.map(anime => {
 					return (
@@ -21,7 +22,7 @@ const CardContainer = ({ anime, callback, character }: Props) => {
 				})}
 			</div>}
 			{!anime.length && <div className='h-[75vh] grid place-items-center content-center text-slate-200'>
-				No anime
+				{!loading ? "No anime" : <div className='animate-spin h-10 w-10 border border-transparent border-t-slate-200 rounded-full'></div>}
 			</div>}
 		</div>
 	)

@@ -31,18 +31,13 @@ const Card = ({ anime, callback, character = '+' }: Props) => {
 	return (
 		<div className='relative cursor-pointer' onMouseEnter={handleMouseEnter} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
 			<div className='flex flex-col w-full'>
-				<div ref={tooltipRef} className='hidden fixed h-48 w-96 border p-3 border-slate-300 bg-gray-900 z-20 rounded-lg md:-ml-96 md:-mt-48 text-slate-200'>
+				<div ref={tooltipRef} className='hidden fixed w-96 border p-3 border-slate-300 bg-black z-20 rounded-lg md:-ml-96 text-slate-200'>
 					<div className='flex justify-between font-semibold pb-0'>
 						<span>{anime.title.toString() + ' '}<span className='font-base'>{anime.year && `(${anime.year})`}</span></span>
 						<span className='font-light whitespace-nowrap'>{anime.scored_by && ('👤 ' + anime.scored_by?.toString() + ' ')}{anime.score && ('⭐ ' + anime.score?.toString())}</span>
 					</div>
 					<div className='font-light'><span className='font-semibold'>{anime.genres.length !== 0 && 'Genres:'}</span> {anime.genres?.map(genre => genre.name.toString()).join(',')}</div>
 					<div className='font-light'><span className='font-semibold'>{anime.studios.length !== 0 && 'Studios:'}</span> {anime.studios?.map(studio => studio.name.toString()).join(',')}</div>
-					<div className='overflow-hidden line-clamp-3'>
-						{anime.background ?
-							anime.background.toString()
-							: 'No Background Available'}
-					</div>
 				</div>
 			</div>
 			<div className='border rounded-xl transition ease-out border-slate-500 

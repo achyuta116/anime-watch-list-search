@@ -19,13 +19,13 @@ const ListsComponent = ({ callback }: Props) => {
 
 	return (
 		<div className='pl-3 mx-2'>
-			<div className='p-3 text-slate-200 text-2xl font-semibold'>WatchLists</div>
+			<div className='p-3 text-slate-200 text-2xl font-semibold'>My WatchLists</div>
 			<hr />
 			{lists && lists.map(list => <div onClick={() => {
 				callback(list.list)
 			}} key={list._id} className='rounded-md text-lg scale-95 
 						md:hover:scale-100 hover:drop-shadow-md p-3 my-3 overflow-ellipsis 
-						bg-slate-800 text-slate-300 min-h-content transition ease-out cursor-pointer'>{list.list}</div>)}
+						bg-gray-900 text-slate-300 min-h-content transition ease-out cursor-pointer'>{list.list}</div>)}
 			
 		</div>
 	)

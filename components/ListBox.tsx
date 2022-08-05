@@ -10,6 +10,7 @@ import ListsComponent from './ListsComponent'
 const ListBox = () => {
     const [anime, setAnime] = useState<Anime[]>([])
     const [list, setList] = useState<String>('')
+    const [loading, setLoading] = useState<boolean>(false)
 	const { sfw } = useContext(SfwContext)
     const { data: session } = useSession()
     useEffect(() => {}, [anime])
@@ -36,6 +37,7 @@ const ListBox = () => {
     const handleListClick = (list: String) => {
         setList(list)
         setAnime([])
+        setLoading(true)
         fetch('/api/list', {
             method: 'POST',
             body: JSON.stringify({
@@ -45,25 +47,27 @@ const ListBox = () => {
             headers: new Headers ({
                 'content-type' : 'application/json'
             })
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .then(data => {
-            console.log(data)
             Promise.all(data.anime.anime.map((id: Number) => {
-                return fetchAndRetryIfNecessary(() => fetch(`https://api.jikan.moe/v4/anime/${id}`)).then(res => res.json())
-                .then(data => {
-                    anime.push(data.data)
-                    setAnime(anime)
-                    return data.data
-                })  
-            }))
-            .then(setAnime)
-            .catch(err => console.log(err, 'ListBox /api/list'))
+                return fetchAndRetryIfNecessary(() => fetch(`https://api.jikan.moe/v4/anime/${id}`))
+                       .then(res => res.json())  
+            })).then(data => {
+                setAnime(data.map(element => element.data))
+                setLoading(false)
+            })
+        })
+        .then(() => setLoading(false))
+        .catch(err => {
+            console.log(err, 'ListBox /api/list')
+            setLoading(false)
         })
     }
     return (
         <div className='grid md:grid-cols-2 content-center pt-24 min-h-screen h-full'>
             <ListsComponent callback={handleListClick}/>
-            <CardContainer anime={anime.filter(anime => {
+            <CardContainer loading={loading} anime={anime.filter(anime => {
                     if(!anime) return false
 					return sfw ? true
 						: ['G', 'PG', 'PG-13', 'R', ''].includes(ratingToStub(anime.rating?.toString()))
