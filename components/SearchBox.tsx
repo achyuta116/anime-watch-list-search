@@ -19,7 +19,7 @@ const SearchBox = () => {
 				<SearchComponent callback={setAnime} />
 				<CardContainer callback={openModal} character='+' anime={anime.filter(anime => {
 					return sfw ? true
-						: ['G', 'PG', 'PG-13', 'R', ''].includes(ratingToStub(anime.rating?.toString()))
+						: ['G', 'PG', 'PG-13', 'R', ''].includes(ratingToStub(anime.rating))
 				})} loading={false} />
 			</div>
 		</>

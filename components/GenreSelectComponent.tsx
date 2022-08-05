@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
 interface Props {
-    pair: [String, Number],
-    setCallback: (genre: String) => void,
-    unsetCallback: (genre: String) => void,
+    pair: [string, number],
+    setCallback: (genre: string) => void,
+    unsetCallback: (genre: string) => void,
 }
 
 

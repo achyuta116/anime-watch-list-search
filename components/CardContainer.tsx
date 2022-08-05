@@ -4,7 +4,7 @@ import Card from './Card'
 
 interface Props {
 	anime: Anime[],
-	callback: (id: Number) => void,
+	callback: (id: number) => void,
 	character: '+' | '-',
 	loading: boolean
 }
@@ -17,7 +17,7 @@ const CardContainer = ({ anime, callback, character, loading = false }: Props) =
        place-items-center gap-2 md:mx-4 auto-rows-min'>
 				{anime.map(anime => {
 					return (
-						<Card character={character} callback={callback} key={anime.mal_id.toString()} anime={anime} />
+						<Card character={character} callback={callback} key={(anime.mal_id)} anime={anime} />
 					)
 				})}
 			</div>}

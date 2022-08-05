@@ -1,8 +1,8 @@
 import React from 'react'
 
 interface Props {
-    tuple: [String, String, [String, String][]],
-    setCallback: (filter: [String, String]) => void
+    tuple: [string, string, [string, string][]],
+    setCallback: (filter: [string, string]) => void
 }
 
 const FilterSelectComponent = ({ tuple, setCallback }: Props) => {

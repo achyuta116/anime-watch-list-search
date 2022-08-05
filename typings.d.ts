@@ -1,32 +1,32 @@
 export type Genre = {
-    mal_id: Number,
-    type: String,
-    name: String,
-    url: String
+    mal_id: number,
+    type: string,
+    name: string,
+    url: string
 }
 
 export type Studio = {
-    mal_id: Number,
-    type: String,
-    name: String,
-    url: String
+    mal_id: number,
+    type: string,
+    name: string,
+    url: string
 }
 
 export type Anime = {
     images: {
         jpg: {
-            image_url: String,
+            image_url: string,
         }
     },
-    type: String,
-    title: String,
-    mal_id: Number,
+    type: string,
+    title: string,
+    mal_id: number,
     genres: Genre[],
-    score: Number,
+    score: number,
     studios: Studio[],
-    scored_by: Number,
-    year: Number,
-    rating: String,
-    url: String
+    scored_by: number,
+    year: number,
+    rating: string,
+    url: string
 }
 

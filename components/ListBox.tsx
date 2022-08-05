@@ -9,12 +9,12 @@ import ListsComponent from './ListsComponent'
 
 const ListBox = () => {
     const [anime, setAnime] = useState<Anime[]>([])
-    const [list, setList] = useState<String>('')
+    const [list, setList] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
 	const { sfw } = useContext(SfwContext)
     const { data: session } = useSession()
     useEffect(() => {}, [anime])
-    const handleDelete = (id: Number) => {
+    const handleDelete = (id: number) => {
         fetch('/api/anime', {
             method: 'DELETE',
             body: JSON.stringify({
@@ -34,9 +34,10 @@ const ListBox = () => {
             console.log(err, 'ListBox /api/anime')
         })
     }
-    const handleListClick = (list: String) => {
+    const handleListClick = (list: string) => {
         setList(list)
         setAnime([])
+        if (!list) return
         setLoading(true)
         fetch('/api/list', {
             method: 'POST',
@@ -50,7 +51,7 @@ const ListBox = () => {
         })
         .then(res => res.json())
         .then(data => {
-            Promise.all(data.anime.anime.map((id: Number) => {
+            Promise.all(data.anime.anime.map((id: number) => {
                 return fetchAndRetryIfNecessary(() => fetch(`https://api.jikan.moe/v4/anime/${id}`))
                        .then(res => res.json())  
             })).then(data => {
@@ -58,7 +59,6 @@ const ListBox = () => {
                 setLoading(false)
             })
         })
-        .then(() => setLoading(false))
         .catch(err => {
             console.log(err, 'ListBox /api/list')
             setLoading(false)
@@ -70,7 +70,7 @@ const ListBox = () => {
             <CardContainer loading={loading} anime={anime.filter(anime => {
                     if(!anime) return false
 					return sfw ? true
-						: ['G', 'PG', 'PG-13', 'R', ''].includes(ratingToStub(anime.rating?.toString()))
+						: ['G', 'PG', 'PG-13', 'R', ''].includes(ratingToStub(anime.rating))
 				})} callback={handleDelete} character='-' />
         </div>
     )

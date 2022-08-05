@@ -10,7 +10,7 @@ interface Props {
 }
 
 const SearchComponent = ({ callback }: Props) => {
-    const genre_pairs: [String, Number][] = [
+    const genre_pairs: [string, number][] = [
         ["Action", 1],
         ["Adventure", 2],
         ["Cars", 3],
@@ -50,7 +50,7 @@ const SearchComponent = ({ callback }: Props) => {
         ["Psychological", 40],
 
     ]
-    const filter_tuples: [String, String, [String, String][]][] = [
+    const filter_tuples: [string, string, [string, string][]][] = [
         ["type", "Type", [
             ["All", ''],
             ['TV', 'tv'],
@@ -95,23 +95,23 @@ const SearchComponent = ({ callback }: Props) => {
         ]]
     ]
 
-    const genres: Map<String, Number> = new Map(genre_pairs.map(element => [element[0], element[1]]))
-    const [selectedGenres, setSelectedGenres] = useState<Set<String>>(new Set<String>())
-    const [selectedFilters, setSelectedFilters] = useState<Map<String, String>>(new Map<String, String>())
+    const genres: Map<string, number> = new Map(genre_pairs.map(element => [element[0], element[1]]))
+    const [selectedGenres, setSelectedGenres] = useState<Set<string>>(new Set<string>())
+    const [selectedFilters, setSelectedFilters] = useState<Map<string, string>>(new Map<string, string>())
     const [queryString, setQueryString] = useState("")
-    const setGenre = (genre: String) => {
+    const setGenre = (genre: string) => {
         selectedGenres.add(genre)
         setSelectedGenres(selectedGenres)
     }
-    const unsetGenre = (genre: String) => {
+    const unsetGenre = (genre: string) => {
         selectedGenres.delete(genre)
         setSelectedGenres(selectedGenres)
     }
-    const setFilter = (filter: [String, String]) => {
+    const setFilter = (filter: [string, string]) => {
         if (filter[1] === '')
             selectedFilters.delete(filter[0])
         if (filter[0] === 'min_score' && filter[1] !== '')
-            selectedFilters.set('max_score', (Number(filter[1]) + 1).toString())
+            selectedFilters.set('max_score', ((filter[1]) + 1).toString())
         else if (filter[0] === 'min_score')
             selectedFilters.delete('max_score')
         selectedFilters.set(filter[0], filter[1])
