@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import React, { useContext, useEffect, useState } from 'react'
 import { SfwContext } from '../contexts/sfwContext'
 import { Anime } from '../typings'
@@ -65,13 +65,18 @@ const ListBox = () => {
         })
     }
     return (
-        <div className='grid md:grid-cols-2 content-center pt-24 min-h-screen h-full'>
+        <div className='grid md:grid-cols-2 place-items-center pt-24 min-h-screen h-full'>
+            {session && <>
             <ListsComponent callback={handleListClick}/>
             <CardContainer loading={loading} anime={anime.filter(anime => {
                     if(!anime) return false
 					return sfw ? true
 						: ['G', 'PG', 'PG-13', 'R', ''].includes(ratingToStub(anime.rating))
 				})} callback={handleDelete} character='-' />
+            </>}
+            {!session && <div className='text-slate-200 md:col-span-2'>
+                <span className='underline cursor-pointer' onClick={() => signIn()}>Sign in</span> to view your lists
+            </div>}
         </div>
     )
 }
